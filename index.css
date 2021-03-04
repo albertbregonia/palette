@@ -1,0 +1,312 @@
+@font-face {
+    font-family: "Bold";
+    src: url("https://albertbregonia.us.to/font/Gravity-Bold.otf") format("opentype");
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    color: ghostwhite;
+}
+
+:root {
+    align-content: center;
+    font-family: 'Red Hat Display', sans-serif;
+    font-size: medium;
+
+    --main-color: #181b24;
+    --accent-color: #0a0b11;
+    --highlight: #4081b3;
+    --highlight2: #d27af0;
+    --highlight3: #267dff;
+}
+
+/*Header*/
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5%;
+    background-color: var(--accent-color);
+    box-shadow: 0 2px 15px 1px black;
+}
+
+#brand {
+    display: flex;
+    align-items: center;
+    margin-left: 1vw;
+}
+
+#logo {
+    transition: all ease-in-out 500ms;
+}
+
+#logo:hover { 
+    transform: scale(1.5) rotateZ(720deg);
+}
+
+.app-name {
+    position: relative;
+    font-family: 'Bold', sans-serif;
+    font-size: x-large;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.30);
+    white-space: nowrap;
+}
+
+#announcements {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 32vw;
+    width: 32vw;
+    visibility: hidden;
+    padding: 1vh 2vw;
+    text-align: center;
+    font-size: x-large;
+    font-family: 'Red Hat Display', sans-serif;
+    white-space: nowrap;
+    color: ghostwhite;
+    overflow: auto;
+    border: 1px solid var(--highlight);
+    background-color: var(--main-color);
+}
+
+#menu {
+    margin-right: 1vw;
+    padding: 5px 5px 5px;
+    transition: all ease-in-out 500ms;
+}
+
+#menu div {
+    width: 25px;
+    height: 4px;
+    margin: 5px 0;
+    background-color: ghostwhite;
+}
+
+#menu:hover {
+    transform: rotateZ(270deg);
+}
+
+#cursor {
+    display: none;
+}
+
+#toolbar box {
+    padding: 10px 10px;
+    border: 1px solid var(--accent-color);
+    background-color: black;
+}
+
+#toolbar * {
+    margin-right: 3px;
+}
+
+#toolbar {
+    position: absolute;
+    margin-top: 2vh;
+    margin-left: 1vw;
+    display: none;
+}
+
+#toolbar box.selected {
+    border: 1px solid var(--highlight);
+    box-shadow: 0 3px 10px 0 var(--highlight);
+    transition: all ease-in-out 100ms;
+}
+
+#clear, #leave {
+    display: none;
+    margin-right: 1vw;
+    border: none;
+    font-size: large;
+}
+
+#clear {
+    display: flex; 
+    float: right;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    color: black;
+    font-size: larger;
+    text-shadow: -1px 1px 2px var(--highlight3),
+                1px 1px 2px var(--highlight3),
+                1px -1px 0 var(--highlight3),
+                -1px -1px 0 var(--highlight3);
+    user-select: none;
+}
+
+#clear:hover {
+    color: var(--highlight2);
+    transition: all ease-in-out 100ms;
+}
+
+/*Login Menu*/
+#start {
+    z-index: 2;
+    position: fixed;
+    width: fit-content;
+    left: 0;
+    right: 0;
+    text-align: center;
+    margin: 15vh auto;
+    padding: 10vh 8vw;
+    background-color: var(--accent-color);
+    box-shadow: 0 5px 25px 1px black;
+    animation: topDown 500ms;
+}
+
+@keyframes topDown {
+    from {margin-top: -30vh;}
+    to {margin-top: 15vh;}
+}
+
+/*Whiteboard*/
+#game {
+    display: none;
+}
+
+#whiteboard {
+    position: absolute;
+    width: 79%;
+    height: 91vh;
+    margin-left: 0.5%;
+    border-radius: 20px;
+    border: 2px solid var(--highlight);
+    background-color: #fff;
+    box-shadow: 0 5px 15px 0 black;
+    overflow: hidden;
+}
+
+#moreColors {
+    display: none;
+    max-width: 20vw;
+    height: fit-content;
+    float: right;
+    margin-bottom: -1vh;
+    margin-left: 0.5vw;
+    margin-top: 0;
+    padding-bottom: 0.5vh;
+    overflow: auto;
+}
+
+body {
+    background-color: var(--main-color);
+}
+
+/*Chat Panel, Log and Input*/
+#chat {
+    width: 19%;
+    height: 91vh;
+    float: right;
+    margin-right: 0.5%;
+    border: 2px solid var(--highlight);
+    border-radius: 20px;
+    overflow-y: hidden;
+    box-shadow: 0 2px 15px 1px black;
+}
+
+#chat form {
+    display: flex;
+    float: end;
+    margin: 2.5vh;
+}
+
+#chat ul {
+    max-height: 83vh;
+    height: 83vh;
+    border: 2px solid ghostwhite;
+    border-radius: 20px;
+    overflow-y: auto;
+}
+
+#chat ul li {
+    font-size: large;
+    margin-top: 1vh;
+    padding-left: 1vw;
+}
+
+#chat ul li::after{
+    content:'';
+    display: block;
+    height: 1px;
+    width: 17vw;
+    margin-top: 1vh;
+    background-color: ghostwhite;
+}
+
+/*Text Fields*/
+input[type="text"], input[type="password"] {
+    width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1vh;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    border: none;
+    border-bottom: 2px solid ghostwhite;
+    box-sizing: border-box;
+    font-size: 15px;
+    font-family: Arial, sans-serif;
+    background-color: transparent;
+}
+
+input[type="text"]:focus, input[type="password"]:focus { 
+    outline: none;
+    border: 0 solid var(--accent-color);
+    border-bottom: 2px solid ghostwhite;
+}
+
+/*Scroll Bar*/
+*::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+    margin-top: 1vh;
+}
+
+#moreColors::-webkit-scrollbar-track {
+    background-color: #C0C0C0;
+}
+
+#moreColors::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    border: 3px solid var(--highlight);
+    background-color: var(--highlight);
+}
+  
+*::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: transparent;
+}
+
+/*Buttons*/
+button {
+    font-family: 'Red Hat Display', sans-serif;
+    text-align: center;
+    padding: 8px 16px;
+    border: 2px solid ghostwhite;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+    background-color: transparent;
+}
+
+button:focus {
+    outline: none;
+}
+
+button::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background-color: ghostwhite;
+    transition: all ease-in-out 250ms;
+}
+
+
+button:hover::after {
+    width: 100%;
+}

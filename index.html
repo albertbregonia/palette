@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="index.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display&display=swap" rel="stylesheet">
+    <title>Palette</title>
+</head>
+<header>
+    <div id="brand">
+        <img id="logo" src="https://albertbregonia.us.to/media/ktt.png" width="60vw" height="60vh"/>
+        <p class="app-name">P&ensp;A&ensp;L&ensp;E&ensp;T&ensp;T&ensp;E</p>
+    </div>
+    <div id="announcements">Announcements will be shown here!</div>
+    <div style="display: flex;">
+        <button id="leave" onclick="leaveLobby()"><b>LEAVE LOBBY</b></button>
+        <div id="menu" onclick="getPlayers()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</header>
+<body onload="hasGame()">
+    <div id="start">
+        <h1>Palette by Albert Bregonia</h1><br>
+        <form id="lobbyInfo" method="POST" autocomplete="off">
+            <input type="text" name="username" autocomplete="false" placeholder="Username"><br>
+            <input type="text" name="lobbyName" autocomplete="false" placeholder="Lobby Name"><br>
+            <input type="password" name="lobbyPass" placeholder="Lobby Password"><br><br>
+            <button style="margin-bottom: 10px;" id="join-lobby" type="submit" onclick="return lobbyRequest(`join`);"><b>JOIN LOBBY</b></button>
+            <button style="margin-bottom: 10px;" id="make-lobby" type="submit" onclick="return lobbyRequest(`new`);"><b>MAKE LOBBY</b></button>
+        </form>
+        <a href="https://www.pexels.com/photo/calm-body-of-lake-between-mountains-346529/">Photo by Bri Schneiter from Pexels</a>
+    </div>
+    <span id="game">
+        <canvas id="whiteboard"></canvas>
+        <span id="toolbar">
+            <canvas id="cursor" width="100px" height="100px"></canvas>
+            <input id="sizer" type="range" min="1" max="100" value="5">
+            <box style="background-color: #FF0000"></box>
+            <box style="background-color: #FFA500"></box>
+            <box style="background-color: #FFFF00"></box>
+            <box style="background-color: #008000"></box>
+            <box style="background-color: #0000FF"></box>
+            <box style="background-color: #800080"></box>
+            <box style="background-color: #FFC0CB"></box>
+            <box style="background-color: #FFFFFF"></box>
+            <box style="background-color: #FFDAB9"></box>
+            <box style="background-color: #8B4513"></box>
+            <box style="background-color: #000000" class="selected"></box>
+            <clear id="clear" onselectstart="return false;" onclick="wipeBoard()"><b>CLEAR</b></clear>
+            <box id="expandColor" onselectstart="return false;" style="background-color: var(--highlight)" onclick="toggleMoreColors()">+</box>
+            <span id="moreColors">
+                <box style="background-color: #F0F8FF"></box>
+                <box style="background-color: #FAEBD7"></box>
+                <box style="background-color: #00FFFF"></box>
+                <box style="background-color: #7FFFD4"></box>
+                <box style="background-color: #F0FFFF"></box>
+                <box style="background-color: #F5F5DC"></box>
+                <box style="background-color: #FFE4C4"></box>
+                <box style="background-color: #000000"></box>
+                <box style="background-color: #FFEBCD"></box>
+                <box style="background-color: #0000FF"></box>
+                <box style="background-color: #8A2BE2"></box>
+                <box style="background-color: #A52A2A"></box>
+                <box style="background-color: #DEB887"></box>
+                <box style="background-color: #5F9EA0"></box>
+                <box style="background-color: #7FFF00"></box>
+                <box style="background-color: #D2691E"></box>
+                <box style="background-color: #FF7F50"></box>
+                <box style="background-color: #6495ED"></box>
+                <box style="background-color: #FFF8DC"></box>
+                <box style="background-color: #DC143C"></box>
+                <box style="background-color: #00FFFF"></box>
+                <box style="background-color: #00008B"></box>
+                <box style="background-color: #008B8B"></box>
+                <box style="background-color: #B8860B"></box>
+                <box style="background-color: #A9A9A9"></box>
+                <box style="background-color: #006400"></box>
+                <box style="background-color: #BDB76B"></box>
+                <box style="background-color: #8B008B"></box>
+                <box style="background-color: #556B2F"></box>
+                <box style="background-color: #FF8C00"></box>
+                <box style="background-color: #9932CC"></box>
+                <box style="background-color: #8B0000"></box>
+                <box style="background-color: #E9967A"></box>
+                <box style="background-color: #8FBC8F"></box>
+                <box style="background-color: #483D8B"></box>
+                <box style="background-color: #2F4F4F"></box>
+                <box style="background-color: #00CED1"></box>
+                <box style="background-color: #9400D3"></box>
+                <box style="background-color: #FF1493"></box>
+                <box style="background-color: #00BFFF"></box>
+                <box style="background-color: #696969"></box>
+                <box style="background-color: #1E90FF"></box>
+                <box style="background-color: #B22222"></box>
+                <box style="background-color: #FFFAF0"></box>
+                <box style="background-color: #228B22"></box>
+                <box style="background-color: #FF00FF"></box>
+                <box style="background-color: #DCDCDC"></box>
+                <box style="background-color: #F8F8FF"></box>
+                <box style="background-color: #FFD700"></box>
+                <box style="background-color: #DAA520"></box>
+                <box style="background-color: #808080"></box>
+                <box style="background-color: #008000"></box>
+                <box style="background-color: #ADFF2F"></box>
+                <box style="background-color: #F0FFF0"></box>
+                <box style="background-color: #FF69B4"></box>
+                <box style="background-color: #CD5C5C"></box>
+                <box style="background-color: #4B0082"></box>
+                <box style="background-color: #FFFFF0"></box>
+                <box style="background-color: #F0E68C"></box>
+                <box style="background-color: #E6E6FA"></box>
+                <box style="background-color: #FFF0F5"></box>
+                <box style="background-color: #7CFC00"></box>
+                <box style="background-color: #FFFACD"></box>
+                <box style="background-color: #ADD8E6"></box>
+                <box style="background-color: #F08080"></box>
+                <box style="background-color: #E0FFFF"></box>
+                <box style="background-color: #FAFAD2"></box>
+                <box style="background-color: #90EE90"></box>
+                <box style="background-color: #D3D3D3"></box>
+                <box style="background-color: #FFB6C1"></box>
+                <box style="background-color: #FFA07A"></box>
+                <box style="background-color: #20B2AA"></box>
+                <box style="background-color: #87CEFA"></box>
+                <box style="background-color: #778899"></box>
+                <box style="background-color: #B0C4DE"></box>
+                <box style="background-color: #FFFFE0"></box>
+                <box style="background-color: #00FF00"></box>
+                <box style="background-color: #32CD32"></box>
+                <box style="background-color: #FAF0E6"></box>
+                <box style="background-color: #FF00FF"></box>
+                <box style="background-color: #800000"></box>
+                <box style="background-color: #66CDAA"></box>
+                <box style="background-color: #0000CD"></box>
+                <box style="background-color: #BA55D3"></box>
+                <box style="background-color: #9370DB"></box>
+                <box style="background-color: #3CB371"></box>
+                <box style="background-color: #7B68EE"></box>
+                <box style="background-color: #00FA9A"></box>
+                <box style="background-color: #48D1CC"></box>
+                <box style="background-color: #C71585"></box>
+                <box style="background-color: #191970"></box>
+                <box style="background-color: #F5FFFA"></box>
+                <box style="background-color: #FFE4E1"></box>
+                <box style="background-color: #FFE4B5"></box>
+                <box style="background-color: #FFDEAD"></box>
+                <box style="background-color: #000080"></box>
+                <box style="background-color: #FDF5E6"></box>
+                <box style="background-color: #808000"></box>
+                <box style="background-color: #6B8E23"></box>
+                <box style="background-color: #FFA500"></box>
+                <box style="background-color: #FF4500"></box>
+                <box style="background-color: #DA70D6"></box>
+                <box style="background-color: #EEE8AA"></box>
+                <box style="background-color: #98FB98"></box>
+                <box style="background-color: #AFEEEE"></box>
+                <box style="background-color: #DB7093"></box>
+                <box style="background-color: #FFEFD5"></box>
+                <box style="background-color: #FFDAB9"></box>
+                <box style="background-color: #CD853F"></box>
+                <box style="background-color: #FFC0CB"></box>
+                <box style="background-color: #DDA0DD"></box>
+                <box style="background-color: #B0E0E6"></box>
+                <box style="background-color: #800080"></box>
+                <box style="background-color: #FF0000"></box>
+                <box style="background-color: #BC8F8F"></box>
+                <box style="background-color: #4169E1"></box>
+                <box style="background-color: #8B4513"></box>
+                <box style="background-color: #FA8072"></box>
+                <box style="background-color: #FAA460"></box>
+                <box style="background-color: #2E8B57"></box>
+                <box style="background-color: #FFF5EE"></box>
+                <box style="background-color: #A0522D"></box>
+                <box style="background-color: #C0C0C0"></box>
+                <box style="background-color: #87CEEB"></box>
+                <box style="background-color: #6A5ACD"></box>
+                <box style="background-color: #708090"></box>
+                <box style="background-color: #FFFAFA"></box>
+                <box style="background-color: #00FF7F"></box>
+                <box style="background-color: #4682B4"></box>
+                <box style="background-color: #D2B48C"></box>
+                <box style="background-color: #008080"></box>
+                <box style="background-color: #D8BFD8"></box>
+                <box style="background-color: #FF6347"></box>
+                <box style="background-color: #40E0D0"></box>
+                <box style="background-color: #EE82EE"></box>
+                <box style="background-color: #F5DEB3"></box>
+                <box style="background-color: #FFFFFF"></box>
+                <box style="background-color: #F5F5F5"></box>
+                <box style="background-color: #FFFF00"></box>
+                <box style="background-color: #9ACD32"></box>
+            </span>
+        </span>
+        <div id="chat">
+            <ul id="log"></ul>
+            <form method="POST" autocomplete="off" onsubmit="return chatMessage()">
+                <input type="text" id="msg" name="msg" autocomplete="false" placeholder="Type something...">
+            </form>
+        </div>
+    </span>
+</body>
+<script src="index.js"></script>
+</html>
