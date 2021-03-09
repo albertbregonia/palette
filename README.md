@@ -23,6 +23,7 @@ After learning about the HTML canvas and the capabilities that it held paired wi
 # Future Features:
 - Game Template to easily allow development of new game modes
 - More Included Game Modes
+- Shareable Lobby Links
 
 # Installation and Requirements:
 - Designed using Golang 1.15.6
