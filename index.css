@@ -11,7 +11,7 @@
 
 :root {
     align-content: center;
-    font-family: 'Red Hat Display', sans-serif;
+    font-family: 'Red Hat Display';
     font-size: medium;
 
     --main-color: #181b24;
@@ -47,7 +47,7 @@ header {
 
 .app-name {
     position: relative;
-    font-family: 'Bold', sans-serif;
+    font-family: 'Bold';
     font-size: x-large;
     text-shadow: 2px 2px 8px rgba(0,0,0,0.30);
     white-space: nowrap;
@@ -63,7 +63,7 @@ header {
     padding: 1vh 2vw;
     text-align: center;
     font-size: x-large;
-    font-family: 'Red Hat Display', sans-serif;
+    font-family: 'Red Hat Display';
     white-space: nowrap;
     color: ghostwhite;
     overflow: auto;
@@ -248,7 +248,7 @@ input[type="text"], input[type="password"] {
     border-bottom: 2px solid ghostwhite;
     box-sizing: border-box;
     font-size: 15px;
-    font-family: Arial, sans-serif;
+    font-family: Arial;
     background-color: transparent;
 }
 
@@ -285,7 +285,7 @@ input[type="text"]:focus, input[type="password"]:focus {
 
 /*Buttons*/
 button {
-    font-family: 'Red Hat Display', sans-serif;
+    font-family: 'Red Hat Display';
     text-align: center;
     padding: 8px 16px;
     border: 2px solid ghostwhite;
