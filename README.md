@@ -24,6 +24,7 @@ After learning about the HTML canvas and the capabilities that it held paired wi
 - Game Template to easily allow development of new game modes
 - More Included Game Modes
 - Shareable Lobby Links
+- Embedded Files into Final Executable - Golang 1.16
 
 # Installation and Requirements:
 - Designed using Golang 1.15.6
