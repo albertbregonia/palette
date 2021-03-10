@@ -61,13 +61,13 @@ func hasGame(w http.ResponseWriter, r *http.Request) {
 //newLobby() forwards form data to the lobby manager to make a new lobby if possible
 func newLobby(w http.ResponseWriter, r *http.Request) {
 	session, _ := store.Get(r, key)
-	manager.LobbyHandler(&w, r, session, store, true)
+	manager.LobbyHandler(w, r, session, store, true)
 }
 
 //joinLobby() forwards form data to the lobby manager to join a lobby if possible
 func joinLobby(w http.ResponseWriter, r *http.Request) {
 	session, _ := store.Get(r, key)
-	manager.LobbyHandler(&w, r, session, store, false)
+	manager.LobbyHandler(w, r, session, store, false)
 }
 
 // leaveLobby() only deletes the player's cookies.

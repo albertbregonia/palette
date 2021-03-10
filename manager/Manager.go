@@ -50,14 +50,14 @@ func LobbyManager() {
 }
 
 //LobbyHandler creates a new lobby based on given form data or creates cookie values that are valid for a lobby the user wishes to join
-func LobbyHandler(w *http.ResponseWriter, r *http.Request, session *sessions.Session, store *sessions.CookieStore, newLobby bool) {
+func LobbyHandler(w http.ResponseWriter, r *http.Request, session *sessions.Session, store *sessions.CookieStore, newLobby bool) {
 	if e := r.ParseForm(); e == nil {
 		lobbyName, password, username := r.FormValue(`lobbyName`), r.FormValue(`lobbyPass`), r.FormValue(`username`)
 		if existingLobby := GetLobby(lobbyName); existingLobby != nil { //checks if a lobby exists
 			if existingLobby.Password() == password && !newLobby { //if the password is correct and trying to join
 				existingLobby.UniqueName(&username) //ensure the username is unique
 			} else {
-				(*w).WriteHeader(http.StatusUnauthorized) //password incorrect
+				w.WriteHeader(http.StatusUnauthorized) //password incorrect
 				return
 			}
 		} else if newLobby { //lobby doesn't exist and requesting to make a new lobby
@@ -65,15 +65,15 @@ func LobbyHandler(w *http.ResponseWriter, r *http.Request, session *sessions.Ses
 			add <- &new //create new lobby and send data to LobbyManager() to pause the garbage collection
 			log.Printf(`New Lobby Created: '%v'`, lobbyName)
 		} else {
-			(*w).WriteHeader(http.StatusNotFound) //trying to join a lobby that doesn't exist
+			w.WriteHeader(http.StatusNotFound) //trying to join a lobby that doesn't exist
 			return
 		}
 		session.Values[`lobbyName`], session.Values[`lobbyPass`], session.Values[`username`] = lobbyName, password, username
-		e = store.Save(r, *w, session) //save cookies
+		e = store.Save(r, w, session) //save cookies
 		if e != nil {
-			http.Error(*w, e.Error(), http.StatusInternalServerError)
+			http.Error(w, e.Error(), http.StatusInternalServerError)
 		} else {
-			(*w).WriteHeader(http.StatusAccepted)
+			w.WriteHeader(http.StatusAccepted)
 		}
 	}
 }

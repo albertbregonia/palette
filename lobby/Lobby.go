@@ -41,7 +41,8 @@ const (
 //New is the default constructor for a lobby
 func New(name, password, host string) Data {
 	game := game.New(host)
-	return Data{name, password, &game,
+	return Data{
+		name, password, &game,
 		make([]*player.Data, 0),
 		make(chan *player.Data),
 		make(chan string),
@@ -391,11 +392,11 @@ func (lobby *Data) UniqueName(name *string) {
 	lobby.RUnlock()
 }
 
-func (lobby *Data) messageAll(color, msg string) { //messageAll to server
+func (lobby *Data) messageAll(color, msg string) { //message all players
 	lobby.chat <- fmt.Sprintf(`%v<b title='%v' style='color: %v'>%v</b>`, serverPrefix, game.Now(), color, msg)
 }
 
-func (lobby *Data) message(tag, color, msg string) { //sends message to certain user
+func (lobby *Data) message(tag, color, msg string) { //sends message to certain user, currently the only tag is for the current artist of pictionary
 	lobby.chat <- fmt.Sprintf(`%v%v<b title='%v' style='color: %v'>%v</b>`, tag, serverPrefix, game.Now(), color, msg)
 }
 
