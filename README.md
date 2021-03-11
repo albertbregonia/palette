@@ -27,7 +27,7 @@ After learning about the HTML canvas and the capabilities that it held paired wi
 - Embedded Files into Final Executable - Golang 1.16
 
 # Installation and Requirements:
-- Designed using Golang 1.15.6
+- Designed using Golang 1.15.6 *Current Build is 1.15.6*
 - HTML5, CSS3, JavaScript; Essentially, a modern browser is required to use the `<canvas>` in HTML
 - [Gorilla Sessions](https://github.com/gorilla/sessions "Sessions by The Gorilla Team")
 - [Gorilla WebSocket](https://github.com/gorilla/websocket "WebSocket by The Gorilla Team")
