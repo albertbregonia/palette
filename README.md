@@ -25,6 +25,7 @@ After learning about the HTML canvas and the capabilities that it held paired wi
 - More Included Game Modes
 - Shareable Lobby Links
 - Embedded Files into Final Executable - Golang 1.16
+- Flood Fill Algorithm (Fill Bucket Tool)
 
 # Installation and Requirements:
 - Designed using Golang 1.15.6 *Current Build is 1.15.6*
