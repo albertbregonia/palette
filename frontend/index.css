@@ -92,7 +92,7 @@ header {
     display: none;
 }
 
-#toolbar box {
+#toolbar span {
     padding: 10px 10px;
     border: 1px solid var(--accent-color);
     background-color: black;
@@ -109,7 +109,7 @@ header {
     display: none;
 }
 
-#toolbar box.selected {
+#toolbar span .selected {
     border: 1px solid var(--highlight);
     box-shadow: 0 3px 10px 0 var(--highlight);
     transition: all ease-in-out 100ms;

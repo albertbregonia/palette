@@ -1,10 +1,10 @@
 const whiteboard = document.getElementById(`whiteboard`);
 const brush = whiteboard.getContext(`2d`);
 const sizer = document.getElementById(`sizer`);
-var chat, easel, last; //chat & drawing server websocket, last = most recent drawing data
-var painting = false;
-var theme = `white`; //whiteboard theme
-var border = `black`;
+let chat, easel, last; //chat & drawing server websocket, last = most recent drawing data
+let painting = false;
+let theme = `white`; //whiteboard theme
+let border = `black`;
 
 //======= INTERNAL CALLS =======//
 
@@ -41,17 +41,10 @@ function lobbyRequest(url) {
             body: new URLSearchParams(new FormData(info))
         }).then(r => {
             switch(r.status) {
-                case 202:
-                    location.replace(`/`);
-                    break;
-                case 401:
-                    alert(`Incorrect password for existing lobby.`);
-                    break;
-                case 404:
-                    alert(`Lobby Not Found`);
-                    break;
-                default:
-                    alert(r.statusText);
+                case 202: location.replace(`/`);                           break;
+                case 401: alert(`Incorrect password for existing lobby.`); break;
+                case 404: alert(`Lobby Not Found`);                        break;
+                default: alert(r.statusText);
             }
         }).catch(e => alert(e));
     return false;
@@ -136,12 +129,12 @@ function themeSwitch() {
     switch(theme) {
         case `black`:
             theme = `white`;
-            border = `black`
+            border = `black`;
             break;
         case `white`:
             theme = `black`;
-            border = `white`
-            break
+            border = `white`;
+            break;
     }
     Array.from(document.getElementsByTagName(`box`)).forEach(box => box.style.border = `1px solid ${border}`);
     last = {'id': 3}
@@ -151,7 +144,7 @@ function themeSwitch() {
 }
 
 function chatMessage() { //send new message to lobby
-    var input = document.getElementById(`msg`);
+    let input = document.getElementById(`msg`);
     if (input.value.trim() != ``) {
         chat.send(input.value.trim());
         input.value = ''; //clear previous text
@@ -270,7 +263,7 @@ function drawServerStartup() {
     easel.onmessage = msg => {
         let data = JSON.parse(msg.data);
         if (data != last) {
-            switch(parseInt(data['id'])) {
+            switch(parseInt(data.id)) {
                 case 0: //simulate drawing data
                     let x = data[`clientX`]-data[`originalX`];
                     let y = data[`clientY`]-data[`originalY`];

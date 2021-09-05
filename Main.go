@@ -39,7 +39,7 @@ func main() {
 
 	go manager.LobbyManager() //garbage collector for empty lobbies, handles lobby creation as well
 	log.Println(`[Palette] Server has started`)
-	http.Handle(`/`, http.FileServer(http.Dir(".")))
+	http.Handle(`/`, http.FileServer(http.Dir(`frontend`)))
 	log.Fatal(http.ListenAndServe(`:54000`, nil)) //start server on port 54000
 }
 
