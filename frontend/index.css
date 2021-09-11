@@ -10,7 +10,6 @@
 }
 
 :root {
-    align-content: center;
     font-family: 'Red Hat Display';
     font-size: medium;
 
@@ -19,277 +18,31 @@
     --highlight: #4081b3;
     --highlight2: #d27af0;
     --highlight3: #267dff;
+    --text-color: ghostwhite;
+    --theme: var(--text-color);
 }
 
-/*Header*/
-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 0.5%;
-    background-color: var(--accent-color);
-    box-shadow: 0 2px 15px 1px black;
-}
-
-#brand {
-    display: flex;
-    align-items: center;
-    margin-left: 1vw;
-}
-
-#logo {
-    transition: all ease-in-out 500ms;
-}
-
-#logo:hover { 
-    transform: scale(1.5) rotateZ(720deg);
-}
-
-.app-name {
-    position: relative;
-    font-family: 'Bold';
-    font-size: x-large;
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.30);
-    white-space: nowrap;
-}
-
-#announcements {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    max-width: 32vw;
-    width: 32vw;
-    visibility: hidden;
-    padding: 1vh 2vw;
-    text-align: center;
-    font-size: x-large;
-    font-family: 'Red Hat Display';
-    white-space: nowrap;
-    color: ghostwhite;
-    overflow: auto;
-    border: 1px solid var(--highlight);
-    background-color: var(--main-color);
-}
-
-#menu {
-    margin-right: 1vw;
-    padding: 5px 5px 5px;
-    transition: all ease-in-out 500ms;
-}
-
-#menu div {
-    width: 25px;
-    height: 4px;
-    margin: 5px 0;
-    background-color: ghostwhite;
-}
-
-#menu:hover {
-    transform: rotateZ(270deg);
-}
-
-#cursor {
-    display: none;
-}
-
-#toolbar span {
-    padding: 10px 10px;
-    border: 1px solid var(--accent-color);
-    background-color: black;
-}
-
-#toolbar * {
-    margin-right: 3px;
-}
-
-#toolbar {
-    position: absolute;
-    margin-top: 2vh;
-    margin-left: 1vw;
-    display: none;
-}
-
-#toolbar span .selected {
-    border: 1px solid var(--highlight);
-    box-shadow: 0 3px 10px 0 var(--highlight);
-    transition: all ease-in-out 100ms;
-}
-
-#clear, #leave {
-    display: none;
-    margin-right: 1vw;
-    border: none;
-    font-size: large;
-}
-
-#clear {
-    display: flex; 
-    float: right;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-bottom: 10px;
-    color: black;
-    font-size: larger;
-    text-shadow: -1px 1px 2px var(--highlight3),
-                1px 1px 2px var(--highlight3),
-                1px -1px 0 var(--highlight3),
-                -1px -1px 0 var(--highlight3);
-    user-select: none;
-}
-
-#clear:hover {
-    color: var(--highlight2);
-    transition: all ease-in-out 100ms;
-}
-
-/*Login Menu*/
-#start {
-    z-index: 2;
-    position: fixed;
-    width: fit-content;
-    left: 0;
-    right: 0;
-    text-align: center;
-    margin: 15vh auto;
-    padding: 10vh 8vw;
-    background-color: var(--accent-color);
-    box-shadow: 0 5px 25px 1px black;
-    animation: topDown 500ms;
-}
-
-@keyframes topDown {
-    from {margin-top: -30vh;}
-    to {margin-top: 15vh;}
-}
-
-/*Whiteboard*/
-#game {
-    display: none;
-}
-
-#whiteboard {
-    position: absolute;
-    width: 79%;
-    height: 91vh;
-    margin-left: 0.5%;
-    border-radius: 20px;
-    border: 2px solid var(--highlight);
-    background-color: #fff;
-    box-shadow: 0 5px 15px 0 black;
-    overflow: hidden;
-}
-
-#moreColors {
-    display: none;
-    max-width: 20vw;
-    height: fit-content;
-    float: right;
-    margin-bottom: -1vh;
-    margin-left: 0.5vw;
-    margin-top: 0;
-    padding-bottom: 0.5vh;
-    overflow: auto;
-}
-
-body {
-    background-color: var(--main-color);
-}
-
-/*Chat Panel, Log and Input*/
-#chat {
-    width: 19%;
-    height: 91vh;
-    float: right;
-    margin-right: 0.5%;
-    border: 2px solid var(--highlight);
-    border-radius: 20px;
-    overflow-y: hidden;
-    box-shadow: 0 2px 15px 1px black;
-}
-
-#chat form {
-    display: flex;
-    float: end;
-    margin: 2.5vh;
-}
-
-#chat ul {
-    max-height: 83vh;
-    height: 83vh;
-    border: 2px solid ghostwhite;
-    border-radius: 20px;
-    overflow-y: auto;
-}
-
-#chat ul li {
-    font-size: large;
-    margin-top: 1vh;
-    padding-left: 1vw;
-}
-
-#chat ul li::after{
-    content:'';
-    display: block;
-    height: 1px;
-    width: 17vw;
-    margin-top: 1vh;
-    background-color: ghostwhite;
-}
-
-/*Text Fields*/
-input[type="text"], input[type="password"] {
-    width: 250px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 1vh;
-    padding-bottom: 5px;
-    padding-left: 5px;
-    border: none;
-    border-bottom: 2px solid ghostwhite;
-    box-sizing: border-box;
-    font-size: 15px;
-    font-family: Arial;
-    background-color: transparent;
-}
-
-input[type="text"]:focus, input[type="password"]:focus { 
-    outline: none;
-    border: 0 solid var(--accent-color);
-    border-bottom: 2px solid ghostwhite;
-}
-
-/*Scroll Bar*/
+/* generics */
 *::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
-    margin-top: 1vh;
+    width: 0;
+    height: 0;
 }
 
-#moreColors::-webkit-scrollbar-track {
-    background-color: #C0C0C0;
-}
-
-#moreColors::-webkit-scrollbar-thumb {
-    border-radius: 20px;
-    border: 3px solid var(--highlight);
-    background-color: var(--highlight);
-}
-  
 *::-webkit-scrollbar-track {
-    background: transparent;
+    background-color: transparent;
 }
 
 *::-webkit-scrollbar-thumb {
     background-color: transparent;
 }
 
-/*Buttons*/
 button {
     font-family: 'Red Hat Display';
     text-align: center;
     padding: 8px 16px;
     border: 2px solid ghostwhite;
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+    border-radius: 20px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
     background-color: transparent;
 }
 
@@ -297,6 +50,7 @@ button:focus {
     outline: none;
 }
 
+/* hover underline */
 button::after {
     content: '';
     display: block;
@@ -306,7 +60,280 @@ button::after {
     transition: all ease-in-out 250ms;
 }
 
-
 button:hover::after {
     width: 100%;
+}
+
+input[type="text"]:focus, input[type="password"]:focus { 
+    outline: none;
+    border: 0 solid var(--accent-color);
+}
+
+/*Login Menu*/
+#login {
+    position: fixed;
+    width: fit-content;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-radius: 50px;
+    height: 250px;
+    padding: 75px;
+    text-align: center;
+    margin: auto;
+    background-color: var(--accent-color);
+    box-shadow: 0 5px 25px 1px black;
+    animation: drop-down 500ms;
+}
+
+@keyframes drop-down {
+    from { top: calc(-100vh - 400px); }
+    to { top: 0 }
+}
+
+@keyframes slide-up {
+    from { top: 0; }
+    to { top: calc(-100vh - 400px); }
+}
+
+
+#login input[type="text"], #login input[type="password"] {
+    background-color: transparent;
+    border: none;
+    font-size: medium;
+    border-bottom: 1px solid var(--text-color);
+    padding: 5px;
+}
+
+body {
+    height: 100vh;
+    width: 100vw;
+    background-color: var(--main-color);
+    min-width: 1080px;
+    min-height: 550px;
+}
+
+/*Header*/
+header {
+    display: flex;
+    align-items: center;
+    position: relative;
+    background-color: var(--accent-color);
+    box-shadow: 0 2px 15px 1px black;
+    white-space: nowrap;
+    height: 60px;
+}
+
+#brand {
+    position: absolute;
+    left: 10px;
+    display: flex;
+    align-items: center;
+}
+
+#app-name {
+    font-family: 'Bold';
+    font-size: x-large;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.30);
+    white-space: nowrap;
+}
+
+#announcements {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    min-width: 500px;
+    width: 50%;
+    height: fit-content;
+    border-radius: 20px;
+    padding: 5px;
+    display: none;
+    text-align: center;
+    font-size: x-large;
+    font-family: 'Red Hat Display';
+    white-space: nowrap;
+    color: var(--text-color);
+    overflow: auto;
+    border: 1px solid var(--highlight);
+    background-color: var(--main-color);
+    animation: fade-in 1s;
+}
+
+@keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+#menu {
+    position: absolute;
+    right: 10px;
+    padding: 5px;
+    height: fit-content;
+    transition: all ease-in-out 500ms;
+}
+
+#menu div {
+    width: 25px;
+    height: 4px;
+    margin: 5px 0;
+    background-color: var(--text-color);
+}
+
+#menu:hover {
+    transform: rotateZ(270deg);
+}
+
+/*Game, whiteboard, chat, etc*/
+#game {
+    display: none;
+    margin: 15px;
+    height: calc(100% - 60px - 30px); /*rest of the area - header - margin*/
+}
+
+#viewer {
+    width: 100%;
+    position: relative;
+    border-radius: 20px;
+    box-shadow: 0 5px 10px 0 black;
+    overflow: auto;
+    animation: slide-right 1.5s forwards;
+}
+
+@keyframes slide-right {
+    from { margin-right: 100vw } /*causes both slide animations bc of #game.style.flex*/
+    to { margin-right: 0 }
+}
+
+#toolbar {
+    position: absolute;
+    box-shadow: 0 5px 10px 0 black;
+    border-radius: 20px;
+    background-color: var(--main-color);
+    width: 25px;
+    padding: 15px;
+    height: calc(100% - 30px); /*-30px to account for padding*/
+}
+
+#sizer {
+    /*vertical*/
+    transform-origin: 0% -25%;
+    transform: rotate(-90deg) translate(-150px);
+}
+
+#cursor {
+    display: none;
+}
+
+#toolbar * {
+    cursor: pointer;
+}
+
+#colors {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#colors div {
+    height: 21px;
+    width: 21px;
+    margin: 2px;
+}
+
+#custom-color-picker {
+    width: 25px;
+    height: 25px;
+}
+
+#clear {
+    height: 25px;
+    width: 25px;
+    font-size: x-large;
+    color: red;
+    position: absolute;
+    bottom: 25px;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+#whiteboard-container {
+    height: 100%;
+    overflow: auto;
+    background-color: var(--theme);
+    border-radius: 20px;
+}
+
+/* generics */
+#whiteboard-container::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+#whiteboard-container::-webkit-scrollbar-track {
+    background-color: var(--main-color);
+}
+
+#whiteboard-container::-webkit-scrollbar-thumb {
+    background-color: var(--highlight2);
+    border-radius: 5px;
+}
+
+/*Chat Panel, Log and Input*/
+#chat {
+    background-color: var(--main-color);
+    margin-left: 15px;
+    border-radius: 20px;
+    box-shadow: 0 2px 15px 1px black;
+    width: 300px;
+    min-width: 300px;
+}
+
+#log {
+    list-style: none;
+    height: calc(100% - 75px);
+    border: 2px solid ghostwhite;
+    border-radius: 20px;
+    overflow-y: auto;
+}
+
+#log li {
+    font-size: large;
+    margin: 10px;
+    padding: 0 10px;
+}
+
+/* separator */
+#log li::after {
+    content: '';
+    display: block;
+    height: 1px;
+    width: 100%;
+    margin: 10px 0;
+    background-color: ghostwhite;
+}
+
+#chat form {
+    height: 75px;
+    position: relative;
+}
+
+#msg {
+    width: 250px;
+    padding: 5px;
+    border: none;
+    margin: auto;
+    position: absolute;
+    top: 0; 
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    border-bottom: 2px solid ghostwhite;
+    box-sizing: border-box;
+    font-size: 15px;
+    background-color: transparent;
 }

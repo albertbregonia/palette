@@ -1,29 +1,44 @@
-const whiteboard = document.getElementById(`whiteboard`);
-const brush = whiteboard.getContext(`2d`);
-const sizer = document.getElementById(`sizer`);
-let chat, easel, last; //chat & drawing server websocket, last = most recent drawing data
-let painting = false;
-let theme = `white`; //whiteboard theme
-let border = `black`;
+const whiteboard = document.getElementById(`whiteboard`),
+      brush = whiteboard.getContext(`2d`);
+      sizer = document.getElementById(`sizer`),
+      game = document.getElementById(`game`),
+      login = document.getElementById(`login`),
+      announcements = document.getElementById(`announcements`);
+
+let chatWebsocket, drawingWebsocket, last, //chat & drawing server websocket, last = most recent drawing data
+    isPainting = false,
+    theme = `white`, //whiteboard theme
+    border = `black`;
+
+((noLogin, debugStyle) => {
+    setTimeout(() => {
+        game.style.display = `flex`;
+    login.style.display = `none`;
+    announcements.style.display = `block`;
+    }, 5000);
+
+    setTimeout(() => {
+        login.style.animation = `slide-up 500ms forwards`;
+    }, 4500);
+    whiteboardStartup();
+    addArtistEvents();
+})();
 
 //======= INTERNAL CALLS =======//
 
-function hasGame() { //call the backend and check for valid game, resume if true
-    fetch(`game`, {
-        method: `POST`
-    }).then(r => {
-        if(r.status == 202) { //show game interface if valid
-            document.getElementById(`game`).style.display = `block`;
-            document.getElementById(`start`).style.display = `none`;
-            document.getElementById(`leave`).style.display = `block`;
-            document.getElementById(`announcements`).style.visibility = `visible`;
-            whiteboardStartup();
+async function hasGame() { //call the backend and check for valid game, resume if true
+    try {
+        const response = await fetch(`game`, { method: `POST` });
+        if(response.status == 202) {
+            game.style.display = `flex`;
+            login.style.display = `none`;
+            announcements.style.display = `block`;
         } else {
             document.body.style.backgroundImage = `url(https://images.pexels.com/photos/346529/pexels-photo-346529.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260)`;
             document.body.style.backgroundSize = `cover`;
             document.body.style.backgroundRepeat = `no-repeat`;
-        } //otherwise show login
-    }).catch(e => alert(e));
+        }
+    } catch(e) { console.log(e); }
 }
 
 function lobbyRequest(url) {
@@ -31,7 +46,7 @@ function lobbyRequest(url) {
     let end = false;
     Array.from(info.getElementsByTagName(`input`)).forEach(input => {
         if(input.value.trim()==`` && !end) { //check for valid info given
-            alert(`Invalid Value for: ${input.placeholder}`);
+            console.log(`Invalid Value for: ${input.placeholder}`);
             end = true;
         }
     })
@@ -42,16 +57,16 @@ function lobbyRequest(url) {
         }).then(r => {
             switch(r.status) {
                 case 202: location.replace(`/`);                           break;
-                case 401: alert(`Incorrect password for existing lobby.`); break;
-                case 404: alert(`Lobby Not Found`);                        break;
-                default: alert(r.statusText);
+                case 401: console.log(`Incorrect password for existing lobby.`); break;
+                case 404: console.log(`Lobby Not Found`);                        break;
+                default: console.log(r.statusText);
             }
-        }).catch(e => alert(e));
+        }).catch(e => console.log(e));
     return false;
 }
 
 function leaveLobby() {
-    chat.send(String.fromCharCode(8)); //send deliberate disconnect request
+    chatWebsocket.send(String.fromCharCode(8)); //send deliberate disconnect request
     fetch(`leave`, { //clear cookies for server database
         method: `POST`
     }).then(() => location.reload())
@@ -86,16 +101,16 @@ function removeArtistEvents() { //disable drawing
 }
 
 function connectionLost() {
-    alert(`You have lost connection to the lobby due to an unfortunate error.`);
+    console.log(`You have lost connection to the lobby due to an unfortunate error.`);
     location.reload();
 }
 
 //create a websocket to connect to the lobby's chat thread; parse responses
 function chatStartup() {
-    chat = new WebSocket(`ws://${location.hostname}:${location.port}/chat`);
-    chat.onopen = () => { console.log(`Chat successfully initialized`); drawServerStartup();}
-    chat.onerror = connectionLost;
-    chat.onmessage = msg => {
+    chatWebsocket = new WebSocket(`ws://${location.hostname}:${location.port}/chat`);
+    chatWebsocket.onopen = () => { console.log(`Chat successfully initialized`); drawServerStartup();}
+    chatWebsocket.onerror = connectionLost;
+    chatWebsocket.onmessage = msg => {
         let text = msg.data;
         switch(text.substring(0,6)) {
             case `<anmt>`:
@@ -138,7 +153,7 @@ function themeSwitch() {
     }
     Array.from(document.getElementsByTagName(`box`)).forEach(box => box.style.border = `1px solid ${border}`);
     last = {'id': 3}
-    easel.send(JSON.stringify(last))
+    drawingWebsocket.send(JSON.stringify(last))
     updateCursor();
     wipeBoard();
 }
@@ -146,7 +161,7 @@ function themeSwitch() {
 function chatMessage() { //send new message to lobby
     let input = document.getElementById(`msg`);
     if (input.value.trim() != ``) {
-        chat.send(input.value.trim());
+        chatWebsocket.send(input.value.trim());
         input.value = ''; //clear previous text
     }
     return false;
@@ -165,8 +180,8 @@ function toChatMsg(s) { //string to chat msg in html
 //set main properties of the whiteboard and connect to chat
 function whiteboardStartup() {
     console.log(`Initializing Whiteboard...`);
-    whiteboard.height = whiteboard.offsetHeight;
-    whiteboard.width = whiteboard.offsetWidth;
+    whiteboard.height = 3840;
+    whiteboard.width = 2160;
     brush.lineWidth = sizer.value;
     brush.lineCap = `round`;
     wipeBoard()
@@ -203,22 +218,22 @@ function updateCursor() {
 
 //start drawing
 function start(e) {
-    painting = true;
+    isPainting = true;
     draw(e);
 }
 
 //end brush stroke
 function stop() { 
-    painting = false;
+    isPainting = false;
     brush.beginPath();
     last = {'id': 1};
-    easel.send(JSON.stringify(last));
+    drawingWebsocket.send(JSON.stringify(last));
 }
 
 //take in drawing data from either the mouse/touch screen and broadcast it to the lobby; essentially tracks continuous movement
 function draw(e) {
     e.preventDefault();
-    if(painting) {
+    if(isPainting) {
         let x = e.clientX-whiteboard.offsetLeft;
         let y = e.clientY-whiteboard.offsetTop;
         let clientX = e.clientX, clientY = e.clientY;
@@ -242,7 +257,7 @@ function draw(e) {
             'width': sizer.value,
             'color': brush.strokeStyle
         };
-        easel.send(JSON.stringify(last));
+        drawingWebsocket.send(JSON.stringify(last));
     }
 }
 
@@ -251,16 +266,16 @@ function wipeBoard() {
     brush.fillStyle = theme;
     brush.fillRect(0, 0, whiteboard.width, whiteboard.height);
     last = {'id': 2};
-    if (easel!=null)
-        easel.send(JSON.stringify(last));
+    if (drawingWebsocket!=null)
+        drawingWebsocket.send(JSON.stringify(last));
 }
 
 //create secondary websocket after chat to read in echoed JSON data; simulates drawing
 function drawServerStartup() {
-    easel = new WebSocket(`ws://${location.hostname}:${location.port}/draw`);
-    easel.onopen = () => console.log(`Draw Server successfully initialized`);
-    easel.onerror = connectionLost;
-    easel.onmessage = msg => {
+    drawingWebsocket = new WebSocket(`ws://${location.hostname}:${location.port}/draw`);
+    drawingWebsocket.onopen = () => console.log(`Draw Server successfully initialized`);
+    drawingWebsocket.onerror = connectionLost;
+    drawingWebsocket.onmessage = msg => {
         let data = JSON.parse(msg.data);
         if (data != last) {
             switch(parseInt(data.id)) {
