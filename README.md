@@ -10,6 +10,8 @@
 
 After learning about the HTML canvas and the capabilities that it held paired with JavaScript, I initially intended on making a [skribbl.io](https://skribbl.io/ "Skribbl.io by @ticedev on Twitter") clone. After spending countless hours for one week straight, coding and learning about JavaScript/Golang, I decided to make this WebApp much more. As of 3/1/21, this is my most advanced project.
 
+***Important Note: I am currently creating a v2 of this repository that will provide a better system in terms of custom game creation and utilize WebRTC DataChannels for better performance***
+
 # Main Features
 - Customizable Whiteboard
   - Brush Size Slider - Range of `1px` to `100px` to allow for more precision
