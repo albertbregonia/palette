@@ -30,10 +30,10 @@ type SignalingSocket struct {
 }
 
 //SendSignal is a thread safe wrapper for the `websocket.WriteJSON()` function that only sends the JSON form of a `Signal` struct
-func (signaler *SignalingSocket) SendSignal(event, data string) error {
+func (signaler *SignalingSocket) SendSignal(s Signal) error {
 	signaler.Lock()
 	defer signaler.Unlock()
-	return signaler.WriteJSON(Signal{event, data})
+	return signaler.WriteJSON(s)
 }
 
 //Signals to be written on a SignalingSocket in order to establish WebRTC connections

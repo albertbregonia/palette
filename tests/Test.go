@@ -1,17 +1,18 @@
-package main
+package tests
 
 import (
 	"Palette/lobby"
 	"Palette/lobby/user"
 	"fmt"
 	"log"
+	"os"
 	"runtime"
 	"time"
 )
 
 //ManagerTest is a very simple test that tests the functionality of the lobby database.
 //I know that Go has built in unit tests but for a simple test like this, it doesn't matter.
-func ManagerTest(nLobbies int) {
+func Manager(nLobbies int, manager *lobby.Manager, MAX_USER_TIMEOUT time.Duration) {
 	start := time.Now()
 	for i := 1; i <= nLobbies; i++ { //create n users and n lobbies with those users as the ID
 		ID := fmt.Sprint(i)
@@ -39,7 +40,8 @@ func ManagerTest(nLobbies int) {
 	}
 	for range time.NewTicker(time.Second).C {
 		if runtime.NumGoroutine() == 2 { //block and ensure that only two threads remain: [main, manager.cleanup()], if so all tests passed
-			log.Fatal(`Sucessful test. Elapsed time:`, time.Since(start))
+			log.Println(`Sucessful test. Elapsed time:`, time.Since(start))
+			os.Exit(0)
 		}
 		log.Println(runtime.NumGoroutine(), `active goroutines`)
 	}
