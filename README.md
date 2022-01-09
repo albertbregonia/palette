@@ -1,5 +1,5 @@
 # Palette
-## A Multi-Purpose WebApp Built Around Drawing
+## A Multi-Purpose WebApp Built Around Illustration
 ![Home Page](https://github.com/albertbregonia/Palette/blob/main/img/home.png?raw=true "Home Page")
 
 **Palette** is a small yet powerful WebApp built primariy in Golang. It is designed to create a web server in which people can easily join and create lobbies to draw. Currently, the system features a streamable whiteboard where the host of a lobby can free draw for everyone in the lobby and a customizable pictionary mode. The customizable whiteboard makes use of many features within JavaScript in order to allow the artist to truly lay their mind on the page.
