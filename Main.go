@@ -27,7 +27,7 @@ var (
 )
 
 var (
-	//go:embed frontend/* server.crt server.key
+	//go:embed frontend/*
 	embedded  embed.FS
 	secureKey = securecookie.GenerateRandomKey(512)
 	key       = fmt.Sprintf("%d%d%d%d", //generate random keys per server

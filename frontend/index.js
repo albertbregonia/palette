@@ -3,17 +3,18 @@
 const lobbyNameInput = document.getElementById(`lobby-name`),
       usernameInput = document.getElementById(`username`),
       passwordInput = document.getElementById(`password`),
-      whiteboard = document.getElementById(`whiteboard`),
-      whiteboardStream = document.getElementById(`whiteboard-stream`);
+      whiteboard = document.getElementById(`whiteboard`);
+
+// user login and lobby registration
 
 (function reconnectHandler() {
     fetch(`/reconnect`, {method: `post`})
     .then(response => {
         if(response.status == 202) {
             WebRTCStartup();
-            return response.text();
+            (async () => alert(await response.text()))();
         }
-    }).then(msg => msg ? alert(msg) : undefined).catch(alert);
+    });
 })();
 
 function loginHandler(createLobby) {
@@ -29,10 +30,7 @@ function loginHandler(createLobby) {
     .then(response => {
         if(response.status == 202)
             WebRTCStartup();
-        return response.status;
-    })
-    .then(alert)
-    .catch(alert);
+    });
     return false;
 }
 
@@ -42,14 +40,55 @@ function disconnectHandler() {
     .catch(alert);
 }
 
-const chatInput = document.getElementById(`chat-input`);
-function chat() {
-    rtc.chat.send(JSON.stringify({
-        content: chatInput.value,
-    }));
-    chatInput.value = ``;
-    return false;
+// set up connections
+
+function WebRTCStartup() {
+
+    function formatSignal(event, data) {
+        return JSON.stringify({ 
+            event: event, 
+            data: JSON.stringify(data)
+        });
+    }
+
+    const ws = new WebSocket(`wss://${location.hostname}:${location.port}/connect`); //create a websocket for WebRTC signaling 
+    ws.onopen = () => console.log(`Connected`);
+    ws.onclose = ws.onerror = ({reason}) => alert(`Disconnected ${reason}`);
+    
+    const rtc = new RTCPeerConnection({iceServers: [{urls: `stun:stun.l.google.com:19302`}]}); //create a WebRTC instance
+    rtc.onicecandidate = ({candidate}) => candidate && ws.send(formatSignal(`ice`, candidate)); //if the ice candidate is not null, send it to the peer
+    rtc.oniceconnectionstatechange = () => rtc.iceConnectionState == `failed` && rtc.restartIce();
+    rtc.ondatachannel = ({channel}) => {
+        if(channel.label != `whiteboard`)
+            return;
+        whiteboardSetup();
+        rtc.whiteboard = channel;
+        rtc.whiteboard.onmessage = ({data}) => shareHandler(JSON.parse(data));
+    };
+
+    ws.onmessage = async ({data}) => { //signal handler
+        const signal = JSON.parse(data),
+              content = JSON.parse(signal.data);
+        switch(signal.event) {
+            case `offer`:
+                console.log(`got offer!`, content);
+                await rtc.setRemoteDescription(content); //accept offer
+                const answer = await rtc.createAnswer();
+                await rtc.setLocalDescription(answer);
+                ws.send(formatSignal(`answer`, answer)); //send answer
+                console.log(`sent answer!`, answer);
+                break;
+            case `ice`:
+                console.log(`got ice!`, content);
+                rtc.addIceCandidate(content); //add ice candidates
+                break;
+            default:
+                console.log(`Invalid message:`, content);
+        }
+    };
 }
+
+// set up drawing on the whiteboard
 
 function whiteboardSetup() {
     whiteboard.brush = whiteboard.getContext(`2d`);
@@ -82,17 +121,14 @@ function drawHandler(e) {
     if(whiteboard.isDrawing) {
         let x = e.clientX - whiteboard.offsetLeft;
         let y = e.clientY - whiteboard.offsetTop;
-        let clientX = e.clientX, clientY = e.clientY;
         if (e.touches && e.touches.length == 1) {
             let touch = e.touches[0];
             x = touch.pageX - whiteboard.offsetLeft;
             y = touch.pageY - whiteboard.offsetTop;
-            clientX = touch.pageX;
-            clientY = touch.pageY;
         }
-        whiteboard.brush.lineTo(x,y);
+        whiteboard.brush.lineTo(x, y);
         whiteboard.brush.stroke();
         whiteboard.brush.beginPath();
-        whiteboard.brush.moveTo(x,y);
+        whiteboard.brush.moveTo(x, y);
     }
 }
