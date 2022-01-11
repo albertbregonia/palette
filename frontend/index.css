@@ -1,0 +1,126 @@
+@font-face {
+    font-family: "Bold";
+    src: url("https://albertbregonia.us.to/font/Gravity-Bold.otf") format("opentype");
+}
+@font-face {
+    font-family: "Regular";
+    src: url("https://albertbregonia.us.to/font/Gravity-Regular.otf") format("opentype");
+}
+@font-face {
+    font-family: "Thin";
+    src: url("https://albertbregonia.us.to/font/Gravity-Light.otf") format("opentype");
+}
+@font-face {
+    font-family: "Italics";
+    src: url("https://albertbregonia.us.to/font/Gravity-LightItalic.otf") format("opentype");
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+*::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+*::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: transparent;
+}
+
+button, input {
+    outline: none;
+}
+
+:root {
+    --fg: ghostwhite;
+    --bg: #141520;
+    --accent: #0e0f17;
+    --highlight: #d27af0;
+
+    overflow: hidden;
+    white-space: nowrap;
+    font-family: Thin;
+    font-size: medium;
+    color: var(--fg);
+}
+
+body {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg);
+    width: 100vw;
+    height: 100vh;
+}
+
+/* login css */
+
+#login-dialog {
+    position: fixed;
+    top: 0; bottom: 0;
+    left: 0; right: 0;
+    margin: auto;
+
+    width: fit-content;
+    height: fit-content;
+    overflow: hidden;
+    background: var(--accent);
+    text-align: center;
+    padding: calc(20px + 1%); /* min-padding: 20px */
+
+    border-radius: 20px;
+    border-top: 1px solid ghostwhite;
+    border-bottom: 1px solid ghostwhite;
+}
+
+#login-title {
+    font-size: calc(20px + 4vw); /* min-font-size: 20px */
+    margin: 10px;
+}
+
+#login-dialog form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+    min-width: 300px;
+}
+
+#login-dialog form input {
+    font-family: Thin;
+    font-size: medium;
+    color: var(--fg);
+
+    background: transparent;
+    border: 1px solid var(--fg);
+    border-radius: 100vh;
+
+    width: 60%;
+    padding: 5px 10px;
+    margin: 5px;
+}
+
+#login-dialog form div {
+    display: flex; /*elements will resize to fit 60% width*/
+    justify-content: center;
+    width: 60%;
+}
+
+/* main ui */
+
+#main-ui {
+    display: none;
+}
+
+#whiteboard-viewer {
+}
+
+#chat-log {
+
+}

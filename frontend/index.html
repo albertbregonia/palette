@@ -1,36 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+    <meta name="theme-color" content="#141520">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="anime.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display&display=swap" rel="stylesheet"/>
     <title>Palette v2</title>
 </head>
 <body>
-    <h1>This is a temporary frontend just to test the backend</h1>
-    <form onsubmit="return false;" autocomplete="off">
-        <input type="text" id="lobby-name" placeholder="Lobby Name" required/>
-        <br/>
-        <input type="text" id="username" placeholder="Your Username" required/>
-        <br/>
-        <input type="password" id="password" placeholder="Lobby Password" required/>
-        <br/>
-        <button onclick="loginHandler()">Join</button>
-        <button onclick="loginHandler(true)">New</button>
-    </form>
-    <button onclick="disconnectHandler()">Leave</button>
-    
-    <form onsubmit="return chat()">
-        <input type="text" id="chat-input">
-    </form>
-    <canvas id="whiteboard"></canvas>
-    <video id="whiteboard-stream" autoplay></video>
+    <div id="login-dialog">
+        <h1 id="login-title">P&ensp;A&ensp;L&ensp;E&ensp;T&ensp;T&ensp;E</h1>
+        <form onsubmit="return loginHandler()">
+            <input type="text" id="lobby-name"  placeholder="Lobby Name">
+            <input type="password" id="password"  placeholder="Lobby Password">
+            <input type="text" id="username" placeholder="Username">
+            <div>
+                <input type="submit" value="Join">
+                <input type="button" value="Create" onclick="loginHandler(true)">
+            </div>
+        </form>
+    </div>
+    <main id="main-ui">
+        <div id="toolbox"></div>
+        <div id="whiteboard-viewer">
+            <canvas id="whiteboard" width="3840px" height="2160px"></canvas>
+        </div>
+        <ul id="chat-log">
+            <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos blanditiis dolor corporis saepe. Nemo totam voluptatem tempora necessitatibus facere magnam nihil, esse eos id magni cumque dolorem saepe veritatis repellat.</li>
+            <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos blanditiis dolor corporis saepe. Nemo totam voluptatem tempora necessitatibus facere magnam nihil, esse eos id magni cumque dolorem saepe veritatis repellat.</li>
+            <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos blanditiis dolor corporis saepe. Nemo totam voluptatem tempora necessitatibus facere magnam nihil, esse eos id magni cumque dolorem saepe veritatis repellat.</li>
+            <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos blanditiis dolor corporis saepe. Nemo totam voluptatem tempora necessitatibus facere magnam nihil, esse eos id magni cumque dolorem saepe veritatis repellat.</li>
+            <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos blanditiis dolor corporis saepe. Nemo totam voluptatem tempora necessitatibus facere magnam nihil, esse eos id magni cumque dolorem saepe veritatis repellat.</li>
+            <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos blanditiis dolor corporis saepe. Nemo totam voluptatem tempora necessitatibus facere magnam nihil, esse eos id magni cumque dolorem saepe veritatis repellat.</li>
+            <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos blanditiis dolor corporis saepe. Nemo totam voluptatem tempora necessitatibus facere magnam nihil, esse eos id magni cumque dolorem saepe veritatis repellat.</li>
+            <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos blanditiis dolor corporis saepe. Nemo totam voluptatem tempora necessitatibus facere magnam nihil, esse eos id magni cumque dolorem saepe veritatis repellat.</li>
+            <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos blanditiis dolor corporis saepe. Nemo totam voluptatem tempora necessitatibus facere magnam nihil, esse eos id magni cumque dolorem saepe veritatis repellat.</li>
+            <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos blanditiis dolor corporis saepe. Nemo totam voluptatem tempora necessitatibus facere magnam nihil, esse eos id magni cumque dolorem saepe veritatis repellat.</li>
+        </ul>
+        <form onsubmit="return chatHandler()">
+            <input type="text" id="chat">
+            <input type="submit" value="Send">
+        </form>
+    </main>
     <script src="index.js"></script>
-    <style>
-        #whiteboard, #whiteboard-stream {
-            border: 1px solid black;
-            background-color: white;
-        }
-    </style>
 </body>
 </html>

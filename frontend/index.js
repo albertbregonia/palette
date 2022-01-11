@@ -1,9 +1,10 @@
 //temporary! these functions are merely implemented to test the backend
 
-const lobbyNameInput = document.getElementById(`lobby-name`),
+const loginDialog = document.getElementById(`login-dialog`),
+      lobbyNameInput = document.getElementById(`lobby-name`),
       usernameInput = document.getElementById(`username`),
       passwordInput = document.getElementById(`password`),
-      whiteboard = document.getElementById(`whiteboard`);
+      mainUI = document.getElementById(`main-ui`);
 
 // user login and lobby registration
 
@@ -18,6 +19,8 @@ const lobbyNameInput = document.getElementById(`lobby-name`),
 })();
 
 function loginHandler(createLobby) {
+    loginDialog.classList.add(`fade-up-out`);
+    mainUI.style.display = `flex`;
     if(![lobbyNameInput.value, usernameInput.value, passwordInput.value].every(e => e))
         return false;
     const info = new URLSearchParams({
@@ -28,8 +31,9 @@ function loginHandler(createLobby) {
     });
     fetch(`/login?${info}`, {method: `post`})
     .then(response => {
-        if(response.status == 202)
+        if(response.status == 202) {
             WebRTCStartup();
+        }
     });
     return false;
 }
